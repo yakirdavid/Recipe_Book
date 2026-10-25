@@ -435,6 +435,10 @@ main { outline: none; }
 .notes strong { color: var(--olive); }
 .notes p { margin: 4px 0 0; white-space: pre-line; }
 
+.related { margin-top: 18px; }
+.related-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.related .chip { color: var(--text); }
+
 .source {
   margin-top: 14px;
   font-size: .9rem;
@@ -493,7 +497,7 @@ main { outline: none; }
   * { box-shadow: none !important; animation: none !important; }
   html, body { background: #fff; font-size: 10.5pt; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
-  .topbar, .actions, .video, .variants, .tags, .hint, .fav-btn, .install-hint,
+  .topbar, .actions, .video, .variants, .related, .tags, .hint, .fav-btn, .install-hint,
   .back-link, .scaler, .recipe-hero { display: none !important; }
   .print-only { display: block; }
 

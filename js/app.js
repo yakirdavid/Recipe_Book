@@ -202,7 +202,9 @@
           } else {
             const factor = baseServings ? servings / baseServings : multiplier;
             const qtyOf = (amt, unit) => [
-              typeof amt === "number" ? `<span class="num">${formatAmount(amt * factor)}</span>` : esc(amt || ""),
+              typeof amt === "number" ? `<span class="num">${formatAmount(amt * factor)}</span>`
+                : Array.isArray(amt) ? `<span class="num">${amt.map((a) => formatAmount(a * factor)).join("–")}</span>`
+                : esc(amt || ""),
               esc(unit || "")
             ].filter(Boolean).join(" ");
             const qty = qtyOf(it.amount, it.unit);
@@ -259,6 +261,7 @@
               <p class="hint">לחיצה על שלב מסמנת שסיימת אותו</p>
               <div id="steps">${stepsHtml()}</div>
               ${r.notes ? `<div class="notes"><strong>💡 טיפים והערות</strong><p>${esc(r.notes)}</p></div>` : ""}
+              ${relatedHtml(r)}
               ${r.source && (r.source.url || r.source.name) ? `<div class="source">מקור: ${r.source.url
                 ? `<a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.source.name || r.source.url)}</a>`
                 : esc(r.source.name)}</div>` : ""}
@@ -332,6 +335,14 @@
     });
 
     app.querySelector("#print").addEventListener("click", () => window.print());
+  }
+
+  function relatedHtml(r) {
+    const list = (r.related || []).map((id) => recipes.find((x) => x.id === id)).filter(Boolean);
+    if (!list.length) return "";
+    return `<div class="related"><h3>מתכונים קשורים</h3><div class="related-list">
+      ${list.map((x) => `<a class="chip" href="#/recipe/${encodeURIComponent(x.id)}">${esc(x.emoji || "🍽️")} ${esc(x.title)}</a>`).join("")}
+    </div></div>`;
   }
 
   // YouTube / video file / any other link
