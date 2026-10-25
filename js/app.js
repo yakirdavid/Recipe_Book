@@ -175,18 +175,24 @@
 
     const baseServings = r.servings || 0;
     let servings = baseServings;
+    let multiplier = 1; // used when the recipe has no servings count
+    const variants = Array.isArray(r.variants) ? r.variants : [];
+    let variant = variants[0];
     const ingGroups = groups(r.ingredients);
     const stepGroups = groups(r.steps);
+    const inVariant = (g) => !g.variant || g.variant === variant;
+    const scaleLabel = () => baseServings ? `${servings} מנות` : `כמות ×${formatAmount(multiplier)}`;
     const total = (r.prepTime || 0) + (r.cookTime || 0);
 
     const stats = [
       r.prepTime ? ["הכנה", formatTime(r.prepTime)] : null,
       r.cookTime ? ["בישול", formatTime(r.cookTime)] : null,
       total && r.prepTime && r.cookTime ? ["סה״כ", formatTime(total)] : null,
+      r.yield ? ["כמות", r.yield] : null,
       r.difficulty ? ["רמת קושי", r.difficulty] : null
     ].filter(Boolean);
 
-    const ingredientsHtml = () => ingGroups.map((g) => `
+    const ingredientsHtml = () => ingGroups.filter(inVariant).map((g) => `
       ${g.group ? `<h3>${esc(g.group)}</h3>` : ""}
       <ul class="ing-list">
         ${g.items.map((it) => {
@@ -194,16 +200,20 @@
           if (typeof it === "string") {
             text = esc(it);
           } else {
-            const factor = baseServings ? servings / baseServings : 1;
-            const amount = typeof it.amount === "number" ? `<span class="num">${formatAmount(it.amount * factor)}</span>` : esc(it.amount || "");
-            const qty = [amount, esc(it.unit || "")].filter(Boolean).join(" ");
-            text = `${qty ? `<span class="ing-amount">${qty}</span> ` : ""}${esc(it.name)}${it.note ? ` <span class="ing-note">(${esc(it.note)})</span>` : ""}`;
+            const factor = baseServings ? servings / baseServings : multiplier;
+            const qtyOf = (amt, unit) => [
+              typeof amt === "number" ? `<span class="num">${formatAmount(amt * factor)}</span>` : esc(amt || ""),
+              esc(unit || "")
+            ].filter(Boolean).join(" ");
+            const qty = qtyOf(it.amount, it.unit);
+            const alt = it.alt ? ` <span class="ing-note">(${qtyOf(it.alt.amount, it.alt.unit)})</span>` : "";
+            text = `${qty ? `<span class="ing-amount">${qty}</span>${alt} ` : ""}${esc(it.name)}${it.note ? ` <span class="ing-note">(${esc(it.note)})</span>` : ""}`;
           }
           return `<li><span class="check">${icons.check}</span><span class="ing-text">${text}</span></li>`;
         }).join("")}
       </ul>`).join("");
 
-    const stepsHtml = stepGroups.map((g) => `
+    const stepsHtml = () => stepGroups.filter(inVariant).map((g) => `
       ${g.group ? `<h3>${esc(g.group)}</h3>` : ""}
       <ol class="step-list">${g.items.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>`).join("");
 
@@ -229,20 +239,24 @@
           <div class="recipe-body">
             <section class="panel ingredients-panel">
               <h2>מצרכים
-                ${baseServings ? `<span class="scaler">
-                  <button type="button" data-step="1" aria-label="הוספת מנה">+</button>
-                  <span id="serv">${servings} מנות</span>
-                  <button type="button" data-step="-1" aria-label="הפחתת מנה">−</button>
-                </span>` : ""}
+                <span class="scaler">
+                  <button type="button" data-step="1" aria-label="הגדלת כמות">+</button>
+                  <span id="serv">${scaleLabel()}</span>
+                  <button type="button" data-step="-1" aria-label="הקטנת כמות">−</button>
+                </span>
               </h2>
+              ${variants.length > 1 ? `<div class="variants" role="tablist" aria-label="גרסה">
+                ${variants.map((v) => `<button type="button" class="chip${v === variant ? " active" : ""}" data-variant="${esc(v)}">${esc(v)}</button>`).join("")}
+              </div>` : ""}
               <p class="hint">לחיצה על מצרך מסמנת אותו</p>
               <div id="ings">${ingredientsHtml()}</div>
             </section>
 
             <section class="panel">
               <h2>אופן ההכנה</h2>
+              ${r.video ? videoHtml(r.video) : ""}
               <p class="hint">לחיצה על שלב מסמנת שסיימת אותו</p>
-              ${stepsHtml}
+              <div id="steps">${stepsHtml()}</div>
               ${r.notes ? `<div class="notes"><strong>💡 טיפים והערות</strong><p>${esc(r.notes)}</p></div>` : ""}
               ${r.source && (r.source.url || r.source.name) ? `<div class="source">מקור: ${r.source.url
                 ? `<a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.source.name || r.source.url)}</a>`
@@ -257,17 +271,30 @@
       const li = e.target.closest("li");
       if (li) li.classList.toggle("done");
     });
-    app.querySelectorAll(".step-list").forEach((ol) => ol.addEventListener("click", (e) => {
+    const steps = app.querySelector("#steps");
+    steps.addEventListener("click", (e) => {
       const li = e.target.closest("li");
       if (li) li.classList.toggle("done");
-    }));
+    });
+
+    const variantBar = app.querySelector(".variants");
+    if (variantBar) variantBar.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-variant]");
+      if (!b) return;
+      variant = b.dataset.variant;
+      variantBar.querySelectorAll(".chip").forEach((c) => c.classList.toggle("active", c === b));
+      ings.innerHTML = ingredientsHtml();
+      steps.innerHTML = stepsHtml();
+    });
 
     const scaler = app.querySelector(".scaler");
     if (scaler) scaler.addEventListener("click", (e) => {
       const b = e.target.closest("button");
       if (!b) return;
-      servings = Math.max(1, servings + Number(b.dataset.step));
-      app.querySelector("#serv").textContent = `${servings} מנות`;
+      const dir = Number(b.dataset.step);
+      if (baseServings) servings = Math.max(1, servings + dir);
+      else multiplier = Math.min(10, Math.max(0.5, multiplier + dir * 0.5));
+      app.querySelector("#serv").textContent = scaleLabel();
       ings.innerHTML = ingredientsHtml();
     });
 
@@ -291,6 +318,23 @@
     });
 
     app.querySelector("#print").addEventListener("click", () => window.print());
+  }
+
+  // YouTube / video file / any other link
+  function videoHtml(video) {
+    const v = typeof video === "string" ? { url: video } : video;
+    const title = esc(v.title || "סרטון הדגמה");
+    const yt = String(v.url).match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{6,})/);
+    let body;
+    if (yt) {
+      body = `<div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${yt[1]}" title="${title}" loading="lazy"
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`;
+    } else if (/\.(mp4|webm|mov)(\?|$)/i.test(v.url)) {
+      body = `<div class="video-frame"><video src="${esc(v.url)}" controls playsinline preload="metadata"></video></div>`;
+    } else {
+      body = `<a class="btn" href="${esc(v.url)}" target="_blank" rel="noopener">▶ צפייה בסרטון</a>`;
+    }
+    return `<div class="video"><h3>🎬 ${title}</h3>${body}</div>`;
   }
 
   async function releaseWakeLock() {
