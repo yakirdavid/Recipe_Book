@@ -1085,7 +1085,7 @@ window.RECIPES = [
         items: [
           { amount: 500, unit: "גרם", name: "סולת" },
           { amount: 350, unit: "מ״ל", name: "מים קרים" },
-          { amount: 1, unit: "כפית", name: "מלח הרים" }
+          { amount: 1, unit: "כפית", name: "מלח בהיריון" }
         ]
       },
       {
@@ -1093,7 +1093,7 @@ window.RECIPES = [
         items: [
           { amount: 500, unit: "גרם", name: "בשר בקר טחון" },
           { amount: 1, unit: "", name: "בצל בינוני", note: "מגורד" },
-          { amount: 1, unit: "כפית", name: "מלח הרים" },
+          { amount: 1, unit: "כפית", name: "מלח בהיריון" },
           { amount: 0.5, unit: "כפות", name: "סוכר" },
           { amount: 1, unit: "", name: "חלמון", note: "צהוב" },
           { amount: 1, unit: "צרור", name: "פטרוזיליה", note: "קצוצה דק" },
