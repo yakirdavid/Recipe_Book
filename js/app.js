@@ -219,12 +219,13 @@
 
     app.innerHTML = `
       <article class="recipe">
-        <div class="recipe-hero"><div class="media">${media(r)}</div></div>
+        <div class="recipe-hero${r.image ? " has-image" : ""}"><div class="media">${media(r)}</div></div>
         <div class="container">
           <header class="recipe-head">
             <a href="#/" class="back-link">→ כל המתכונים</a>
             ${r.category ? `<div class="card-cat">${esc(r.category)}</div>` : ""}
             <h1>${esc(r.title)}</h1>
+            <p class="print-only print-meta" id="print-meta"></p>
             ${r.description ? `<p class="desc">${esc(r.description)}</p>` : ""}
             ${r.tags && r.tags.length ? `<div class="tags">${r.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>` : ""}
             ${stats.length ? `<div class="stats">${stats.map(([l, v]) => `<div class="stat"><div class="label">${l}</div><div class="value">${esc(v)}</div></div>`).join("")}</div>` : ""}
@@ -232,7 +233,7 @@
               <button type="button" class="btn${favorites.has(r.id) ? " on" : ""}" id="fav">${icons.heart}<span>מועדף</span></button>
               ${"wakeLock" in navigator ? `<button type="button" class="btn" id="wake">${icons.sun}<span>מסך דולק</span></button>` : ""}
               ${navigator.share ? `<button type="button" class="btn" id="share">${icons.share}<span>שיתוף</span></button>` : ""}
-              <button type="button" class="btn" id="print">${icons.print}<span>הדפסה</span></button>
+              <button type="button" class="btn" id="print">${icons.print}<span>הדפסה / PDF</span></button>
             </div>
           </header>
 
@@ -272,6 +273,17 @@
       if (li) li.classList.toggle("done");
     });
     const steps = app.querySelector("#steps");
+
+    // Shown only on paper: which version and quantity was printed
+    const updatePrintMeta = () => {
+      const parts = [];
+      if (variants.length > 1) parts.push(`גרסת ${variant}`);
+      if (baseServings) parts.push(`${servings} מנות`);
+      else if (multiplier !== 1) parts.push(`כמות ×${formatAmount(multiplier)}`);
+      else if (r.yield) parts.push(r.yield);
+      app.querySelector("#print-meta").textContent = parts.join(" · ");
+    };
+    updatePrintMeta();
     steps.addEventListener("click", (e) => {
       const li = e.target.closest("li");
       if (li) li.classList.toggle("done");
@@ -285,6 +297,7 @@
       variantBar.querySelectorAll(".chip").forEach((c) => c.classList.toggle("active", c === b));
       ings.innerHTML = ingredientsHtml();
       steps.innerHTML = stepsHtml();
+      updatePrintMeta();
     });
 
     const scaler = app.querySelector(".scaler");
@@ -296,6 +309,7 @@
       else multiplier = Math.min(10, Math.max(0.5, multiplier + dir * 0.5));
       app.querySelector("#serv").textContent = scaleLabel();
       ings.innerHTML = ingredientsHtml();
+      updatePrintMeta();
     });
 
     app.querySelector("#fav").addEventListener("click", (e) => {
