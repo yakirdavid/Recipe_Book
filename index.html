@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ספר המתכונים</title>
+  <meta name="description" content="ספר מתכונים דיגיטלי אישי">
+
+  <!-- PWA / mobile -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#f7f1e8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1915" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="מתכונים">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#/" class="brand" aria-label="לעמוד הבית">
+        <img src="icons/icon-192.png" alt="" class="brand-icon">
+        <span class="brand-text">ספר המתכונים</span>
+      </a>
+      <nav class="tabs" aria-label="ניווט">
+        <a href="#/" data-tab="all">כל המתכונים</a>
+        <a href="#/favorites" data-tab="favorites">מועדפים</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <div id="install-hint" class="install-hint" hidden>
+    <span id="install-text"></span>
+    <button type="button" id="install-btn" class="btn btn-small" hidden>התקנה</button>
+    <button type="button" id="install-close" class="icon-btn" aria-label="סגירה">✕</button>
+  </div>
+
+  <script src="data/recipes.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
