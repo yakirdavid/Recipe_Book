@@ -36,7 +36,7 @@ window.RECIPES = [
     description: "רוגעלך שמרים בבלגאן מרושל וחינני בתוך תבנית אחת. מגישים לאמצע השולחן וכל אחד מושך לעצמו רוגעלה.",
     category: "עוגות שמרים",
     tags: ["שמרים", "אפייה", "קרן אגם"],
-    image: null,
+    image: "images/messy-rugelach-cake.jpg",
     emoji: "🥐",
     prepTime: 60,
     cookTime: 30,
