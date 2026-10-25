@@ -14,8 +14,8 @@
   --shadow: 0 1px 2px rgba(60, 40, 20, .06), 0 8px 24px rgba(60, 40, 20, .08);
   --radius: 18px;
   --radius-sm: 12px;
-  --font-body: "Heebo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  --font-title: "Frank Ruhl Libre", "Heebo", Georgia, serif;
+  --font-body: "Assistant", Calibri, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-title: "Assistant", Calibri, system-ui, sans-serif;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   color-scheme: light dark;
@@ -105,7 +105,7 @@ main { outline: none; }
 .hero { padding: 28px 0 8px; }
 .hero h1 {
   font-family: var(--font-title);
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(2rem, 6vw, 3rem);
   line-height: 1.15;
   margin: 0 0 6px;
@@ -273,7 +273,7 @@ main { outline: none; }
 }
 .recipe-head h1 {
   font-family: var(--font-title);
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(1.8rem, 6vw, 2.6rem);
   line-height: 1.15;
   margin: 2px 0 8px;
