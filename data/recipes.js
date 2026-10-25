@@ -560,7 +560,7 @@ window.RECIPES = [
     description: "סימיט כמו בטורקיה: בייגלה שמרים מלופף, טבול בסילאן ומצופה שומשום.",
     category: "פיצה ובצקים",
     tags: ["שמרים", "שומשום", "סימיט", "מאפה"],
-    image: null,
+    image: "images/jerusalem-bagel.jpg",
     emoji: "🥯",
     prepTime: 150,
     cookTime: 20,
