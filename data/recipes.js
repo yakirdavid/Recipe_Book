@@ -819,7 +819,7 @@ window.RECIPES = [
       {
         group: "",
         items: [
-          { amount: 1, unit: "כוס", name: "קמח תבן / כוסמין" },
+          { amount: 1, unit: "כוס", name: "קמח לבן / כוסמין" },
           { amount: 1, unit: "כוס", name: "שיבולת שועל דקה" }
         ]
       },
@@ -830,7 +830,7 @@ window.RECIPES = [
           "גרעיני דלעת",
           "גרעיני חמניה",
           "גרעיני צ'יה",
-          "סרג",
+          "פרג",
           "שומשום"
         ]
       },
@@ -839,7 +839,7 @@ window.RECIPES = [
         items: [
           { amount: 1, unit: "כף", name: "אבקת שום גבישי" },
           { amount: 0.75, unit: "כפית", name: "צ'ילי גרוס" },
-          { amount: 1, unit: "כף", name: "מלח הרים" },
+          { amount: 1, unit: "כף", name: "מלח בהיריון" },
           { amount: 3, unit: "כפות", name: "שמן זית" },
           { amount: 500, unit: "מ״ל", name: "מים" },
           "אפשר להוסיף מעט תימין / זעתר"
