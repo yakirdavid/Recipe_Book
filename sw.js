@@ -1,6 +1,6 @@
 // Offline support: serve from cache, refresh in the background.
 // Bump VERSION when changing app files so old caches are cleared.
-const VERSION = "v19";
+const VERSION = "v20";
 const CACHE = `recipes-${VERSION}`;
 const SHELL = [
   "./",

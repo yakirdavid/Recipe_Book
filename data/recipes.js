@@ -164,7 +164,7 @@ window.RECIPES = [
     description: "שתי עוגיות שוקולד עשירות עם כדור גלידה ביניהן, מגולגלות בשברי עוגיות. הקינוח האולטימטיבי לקיץ.",
     category: "קינוחים",
     tags: ["גלידה", "עוגיות", "שוקולד", "קיץ", "נטלי לוין"],
-    image: null,
+    image: "images/cookies-and-cream-ice-cream-sandwich.jpg",
     emoji: "🍪",
     prepTime: 30,
     cookTime: 8,
