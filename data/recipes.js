@@ -34,7 +34,7 @@ window.RECIPES = [
     id: "messy-rugelach-cake",
     title: "עוגת רוגעלך מבולגנת",
     description: "רוגעלך שמרים בבלגאן מרושל וחינני בתוך תבנית אחת. מגישים לאמצע השולחן וכל אחד מושך לעצמו רוגעלה.",
-    category: "עוגות שמרים",
+    category: "קינוחים",
     tags: ["שמרים", "אפייה", "קרן אגם"],
     image: "images/messy-rugelach-cake.jpg",
     emoji: "🥐",
