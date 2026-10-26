@@ -1,6 +1,6 @@
 // Offline support: serve from cache, refresh in the background.
 // Bump VERSION when changing app files so old caches are cleared.
-const VERSION = "v20";
+const VERSION = "v21";
 const CACHE = `recipes-${VERSION}`;
 const SHELL = [
   "./",
@@ -26,7 +26,7 @@ self.addEventListener("activate", (e) => {
   );
 });
 
-// Network first (revalidating the HTTP cache) so updates show up right away;
+// Network first (bypassing the HTTP cache) so updates show up right away;
 // fall back to the cached copy when offline.
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
@@ -34,7 +34,7 @@ self.addEventListener("fetch", (e) => {
   e.respondWith((async () => {
     const cache = await caches.open(CACHE);
     try {
-      const res = await fetch(e.request, sameOrigin ? { cache: "no-cache" } : undefined);
+      const res = await fetch(sameOrigin ? new Request(e.request.url, { cache: "reload", credentials: "same-origin" }) : e.request);
       if (res && (res.ok || res.type === "opaque")) cache.put(e.request, res.clone());
       return res;
     } catch (err) {

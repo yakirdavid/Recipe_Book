@@ -400,10 +400,27 @@
       navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).then((reg) => {
         // Home-screen apps can stay open for days; check for updates when brought back
         document.addEventListener("visibilitychange", () => {
-          if (document.visibilityState === "visible") reg.update().catch(() => {});
+          if (document.visibilityState !== "visible") return;
+          reg.update().catch(() => {});
+          reloadIfRecipesChanged();
         });
       }).catch(() => {});
     });
+  }
+
+  // A home-screen app resumed from the background keeps the old page in memory.
+  // When it comes back, compare the recipes on the server with the ones shown and
+  // reload only if they differ, so ticked ingredients survive a quick app switch.
+  const shownRecipes = JSON.stringify(recipes);
+  async function reloadIfRecipesChanged() {
+    if (!navigator.onLine) return;
+    try {
+      const res = await fetch("data/recipes.js", { cache: "reload" });
+      if (!res.ok) return;
+      const sandbox = {};
+      new Function("window", await res.text())(sandbox);
+      if (Array.isArray(sandbox.RECIPES) && JSON.stringify(sandbox.RECIPES) !== shownRecipes) location.reload();
+    } catch { /* offline or bad response: keep what is shown */ }
   }
 
   const hint = document.getElementById("install-hint");
