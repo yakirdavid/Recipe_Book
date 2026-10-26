@@ -369,7 +369,7 @@ window.RECIPES = [
     description: "דגים ברוטב פלפלים, שום ופפריקה עם הרבה כוסברה וחומוס, בסיר אחד.",
     category: "דגים",
     tags: ["חריף", "סיר אחד", "כוסברה", "נסיכת הנילוס", "אמנון"],
-    image: null,
+    image: "images/moroccan-fish.jpg",
     emoji: "🌶️",
     prepTime: 15,
     cookTime: 40,
