@@ -1800,7 +1800,7 @@ window.RECIPES = [
     description: "גזר עם עשבי תיבול, חמוציות וגרעינים ברוטב דבש, חרדל וקארי.",
     category: "סלטים",
     tags: ["גזר", "צמחוני"],
-    image: null,
+    image: "images/carrot-salad.jpg",
     emoji: "🥕",
     prepTime: 15,
     cookTime: 0,
