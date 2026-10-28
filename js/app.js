@@ -16,7 +16,7 @@
   };
 
   let favorites = new Set(store.get("favorites", []));
-  const state = { query: "", category: "הכל" };
+  const state = { query: "", category: "הכל", sub: "הכל" };
   let wakeLock = null;
 
   // ---------- helpers ----------
@@ -72,7 +72,7 @@
 
   function searchText(r) {
     const ings = groups(r.ingredients).flatMap((g) => g.items.map(ingredientText));
-    return [r.title, r.description, r.category, ...(r.tags || []), ...ings].join(" ").toLowerCase();
+    return [r.title, r.description, r.category, r.subcategory, ...(r.tags || []), ...ings].join(" ").toLowerCase();
   }
 
   function toggleFavorite(id) {
@@ -105,16 +105,32 @@
         <div class="chips" role="tablist">
           ${categories.map((c) => `<button type="button" class="chip${c === state.category ? " active" : ""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("")}
         </div>
+        <div class="chips subchips" id="subchips" role="tablist" hidden></div>
         <div class="grid" id="grid"></div>
       </div>`;
 
     const grid = app.querySelector("#grid");
+    const subBar = app.querySelector("#subchips");
+
+    // Second row of chips for categories whose recipes have a subcategory
+    const drawSubs = () => {
+      const subs = state.category === "הכל" ? [] : [...new Set(recipes
+        .filter((r) => r.category === state.category).map((r) => r.subcategory).filter(Boolean))];
+      // Biggest groups first
+      const count = (sub) => recipes.filter((r) => r.category === state.category && r.subcategory === sub).length;
+      subs.sort((a, b) => count(b) - count(a));
+      if (!subs.includes(state.sub)) state.sub = "הכל";
+      subBar.hidden = subs.length < 2;
+      subBar.innerHTML = subBar.hidden ? "" : ["הכל", ...subs].map((c) =>
+        `<button type="button" class="chip${c === state.sub ? " active" : ""}" data-sub="${esc(c)}">${esc(c)}</button>`).join("");
+    };
 
     const draw = () => {
       const q = state.query.trim().toLowerCase();
       const list = recipes.filter((r) =>
         (!onlyFavorites || favorites.has(r.id)) &&
         (state.category === "הכל" || r.category === state.category) &&
+        (state.sub === "הכל" || r.subcategory === state.sub) &&
         (!q || searchText(r).includes(q))
       );
 
@@ -133,7 +149,7 @@
           <div class="thumb">${media(r)}</div>
           <button type="button" class="fav-btn${favorites.has(r.id) ? " on" : ""}" data-fav="${esc(r.id)}" aria-label="מועדף">${icons.heart}</button>
           <div class="card-body">
-            ${r.category ? `<span class="card-cat">${esc(r.category)}</span>` : ""}
+            ${r.category ? `<span class="card-cat">${esc(r.subcategory || r.category)}</span>` : ""}
             <h2 class="card-title">${esc(r.title)}</h2>
             <div class="card-meta">
               ${total ? `<span>⏱ ${formatTime(total)}</span>` : ""}
@@ -144,6 +160,7 @@
       }).join("");
     };
 
+    drawSubs();
     draw();
 
     app.querySelector("#q").addEventListener("input", (e) => { state.query = e.target.value; draw(); });
@@ -151,7 +168,16 @@
       const chip = e.target.closest(".chip");
       if (!chip) return;
       state.category = chip.dataset.cat;
-      app.querySelectorAll(".chip").forEach((c) => c.classList.toggle("active", c === chip));
+      state.sub = "הכל";
+      app.querySelectorAll(".chips:not(.subchips) .chip").forEach((c) => c.classList.toggle("active", c === chip));
+      drawSubs();
+      draw();
+    });
+    subBar.addEventListener("click", (e) => {
+      const chip = e.target.closest(".chip");
+      if (!chip) return;
+      state.sub = chip.dataset.sub;
+      subBar.querySelectorAll(".chip").forEach((c) => c.classList.toggle("active", c === chip));
       draw();
     });
     grid.addEventListener("click", (e) => {
@@ -225,7 +251,7 @@
         <div class="container">
           <header class="recipe-head">
             <a href="#/" class="back-link">→ כל המתכונים</a>
-            ${r.category ? `<div class="card-cat">${esc(r.category)}</div>` : ""}
+            ${r.category ? `<div class="card-cat">${esc([r.category, r.subcategory].filter(Boolean).join(" · "))}</div>` : ""}
             <h1>${esc(r.title)}</h1>
             <p class="print-only print-meta" id="print-meta"></p>
             ${r.description ? `<p class="desc">${esc(r.description)}</p>` : ""}

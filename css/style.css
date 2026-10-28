@@ -164,6 +164,10 @@ main { outline: none; }
   transition: all .2s;
 }
 .chip.active { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.subchips { margin-top: -6px; padding-top: 0; }
+.subchips .chip { font-size: .85rem; padding: 5px 13px; background: var(--surface-2); }
+.subchips .chip.active { background: var(--olive); border-color: var(--olive); color: var(--accent-text); }
+
 
 /* ===== Cards grid ===== */
 .grid {
