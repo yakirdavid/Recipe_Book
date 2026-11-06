@@ -961,7 +961,7 @@ window.RECIPES = [
     category: "קינוחים",
     subcategory: "יום הולדת",
     tags: ["קאפקייקס", "וניל", "קצפת"],
-    image: null,
+    image: "images/vanilla-cupcakes.jpg",
     emoji: "🧁",
     prepTime: 20,
     cookTime: 20,
