@@ -323,7 +323,7 @@ window.RECIPES = [
     category: "קינוחים",
     subcategory: "עוגות גבינה",
     tags: ["גבינה", "לימון", "שמנת חמוצה"],
-    image: null,
+    image: "images/lemon-cheesecake.jpg",
     emoji: "🍋",
     prepTime: 20,
     cookTime: 50,
