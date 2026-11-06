@@ -2039,7 +2039,7 @@ window.RECIPES = [
     description: "סלט מרענן ומשביע שמתפקד כארוחה שלמה – נטול גלוטן ודל שומן.",
     category: "סלטים",
     tags: ["כרובית", "חמוציות", "שקדים", "ללא גלוטן", "פרווה", "ראש השנה"],
-    image: null,
+    image: "images/raw-cauliflower-salad.jpg",
     emoji: "🥦",
     prepTime: 10,
     cookTime: 0,
