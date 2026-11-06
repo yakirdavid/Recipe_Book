@@ -111,6 +111,30 @@ main { outline: none; }
   margin: 0 0 6px;
 }
 .hero p { margin: 0; color: var(--text-soft); }
+.hero.has-photo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.hero-text { min-width: 0; }
+.hero-photo {
+  flex: none;
+  width: clamp(104px, 26vw, 180px);
+  margin: 0 4px 0 0;
+  padding: 6px 6px 18px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  transform: rotate(-3deg);
+}
+.hero-photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 583 / 640;
+  object-fit: cover;
+  border-radius: 8px;
+}
 
 .search {
   position: relative;

@@ -94,9 +94,12 @@
 
     app.innerHTML = `
       <div class="container">
-        <section class="hero">
-          <h1>${onlyFavorites ? "המועדפים שלי" : "מה מבשלים היום?"}</h1>
-          <p>${onlyFavorites ? "המתכונים שסימנת בלב" : `${recipes.length} מתכונים בספר`}</p>
+        <section class="hero${onlyFavorites ? "" : " has-photo"}">
+          <div class="hero-text">
+            <h1>${onlyFavorites ? "המועדפים שלי" : "מה מבשלים היום?"}</h1>
+            <p>${onlyFavorites ? "המתכונים שסימנת בלב" : `${recipes.length} מתכונים בספר`}</p>
+          </div>
+          ${onlyFavorites ? "" : `<figure class="hero-photo"><img src="images/family.jpg" alt="המשפחה שלנו" width="583" height="640"></figure>`}
         </section>
         <div class="search">
           ${icons.search}
