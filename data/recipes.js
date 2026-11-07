@@ -1614,40 +1614,18 @@ window.RECIPES = [
     cookTime: 25,
     yield: "2 חלות גדולות",
     difficulty: "בינוני",
-    variants: ["חלה מתוקה", "לחמניות כוסמין חצי־חצי"],
     ingredients: [
       {
         group: "",
-        variant: "חלה מתוקה",
-        items: [{ amount: 1, unit: "ק״ג", name: "קמח שטיבל 2" }]
-      },
-      {
-        group: "",
-        variant: "לחמניות כוסמין חצי־חצי",
         items: [
-          { amount: 500, unit: "גרם", name: "קמח כוסמין מלא" },
-          { amount: 500, unit: "גרם", name: "קמח שטיבל 2" }
-        ]
-      },
-      {
-        group: "",
-        items: [
+          { amount: 1, unit: "ק״ג", name: "קמח שטיבל 2" },
           { amount: 100, unit: "גרם", name: "סוכר" },
           { amount: 50, unit: "גרם", name: "שמן" },
           { amount: 15, unit: "גרם", name: "מלח" },
           { amount: 20, unit: "גרם", name: "שמרים יבשים", note: "2 כפות; או 45 גרם שמרים טריים" },
-          { amount: 100, unit: "גרם", name: "ביצים שלמות", note: "2 ביצים M; 2 ביצים L הן 112 גרם" }
+          { amount: 100, unit: "גרם", name: "ביצים שלמות", note: "2 ביצים M; 2 ביצים L הן 112 גרם" },
+          { amount: 430, unit: "מ״ל", name: "מים" }
         ]
-      },
-      {
-        group: "",
-        variant: "חלה מתוקה",
-        items: [{ amount: 430, unit: "מ״ל", name: "מים" }]
-      },
-      {
-        group: "",
-        variant: "לחמניות כוסמין חצי־חצי",
-        items: [{ amount: 530, unit: "מ״ל", name: "מים" }]
       },
       {
         group: "לקישוט",
