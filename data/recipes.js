@@ -1635,7 +1635,7 @@ window.RECIPES = [
           { amount: 100, unit: "גרם", name: "סוכר" },
           { amount: 50, unit: "גרם", name: "שמן" },
           { amount: 15, unit: "גרם", name: "מלח" },
-          { amount: 45, unit: "גרם", name: "שמרים טריים", note: "או שמרים יבשים" },
+          { amount: 20, unit: "גרם", name: "שמרים יבשים", note: "2 כפות; או 45 גרם שמרים טריים" },
           { amount: 100, unit: "גרם", name: "ביצים שלמות", note: "2 ביצים M; 2 ביצים L הן 112 גרם" }
         ]
       },
