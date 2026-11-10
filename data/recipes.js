@@ -2593,7 +2593,7 @@ window.RECIPES = [
     description: "חלקי עוף צרובים על הרבה בצלים מקורמלים, נצלים בתנור בסיר אחד.",
     category: "עוף",
     tags: ["עוף", "בצל", "סיר אחד", "תנור", "טימין"],
-    image: null,
+    image: "images/onion-confit-chicken.jpg",
     emoji: "🧅",
     prepTime: 15,
     cookTime: 80,
