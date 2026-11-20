@@ -545,7 +545,12 @@ main { outline: none; }
   .stat .label { font-size: 8pt; }
   .stat .value { font-size: 10pt; }
 
-  .recipe-body { display: grid; grid-template-columns: 62mm 1fr; gap: 8mm; margin-top: 5mm; align-items: start; }
+  /* Stack ingredients above the steps so later pages use the full width
+     (side-by-side columns left half of page 2 empty once the ingredients ended) */
+  .recipe-body { display: block; margin-top: 5mm; }
+  .ingredients-panel { margin-bottom: 5mm; padding-bottom: 4mm !important; border-bottom: 1px solid var(--line); }
+  #ings { column-count: 2; column-gap: 10mm; }
+  #ings h3:first-child { margin-top: 0; }
   .ingredients-panel { position: static; }
   .panel { padding: 0; border-radius: 0; background: none; }
   .panel h2 { font-size: 14pt; margin: 0 0 2mm; }
