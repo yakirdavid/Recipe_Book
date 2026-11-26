@@ -1637,7 +1637,7 @@ window.RECIPES = [
           { amount: 20, unit: "גרם", name: "שמרים יבשים", note: "2 כפות" },
           { amount: 1, unit: "כף", name: "מלח דק" },
           { amount: 1 / 3, unit: "כוס", alt: { amount: 66, unit: "גרם" }, name: "סוכר לבן" },
-          { amount: 1 / 3, unit: "כוס", name: "שמן זית" },
+          { amount: 1 / 3, unit: "כוס", alt: { amount: 75, unit: "גרם" }, name: "שמן זית" },
           { amount: 550, unit: "מ״ל", name: "מי ברז" }
         ]
       },
