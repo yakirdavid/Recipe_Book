@@ -2633,7 +2633,7 @@ window.RECIPES = [
     description: "מרק כרובית חלק וקרמי מכרובית צרובה, בלי שמנת. טבעוני או חלבי.",
     category: "מרקים",
     tags: ["כרובית", "טבעוני", "חלבי", "קרמי"],
-    image: null,
+    image: "images/creamy-cauliflower-soup.jpg",
     emoji: "🥣",
     prepTime: 15,
     cookTime: 30,
